@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+
+<h3>Search Results: </h3>
+
+<ul>
+    <li th:each="balloon : ${result}">Name:
+        <th:block th:text="${balloon.getName()}"/>
+        ,
+        description:
+        <th:block th:text="${balloon.getDescription()}"/>
+    </li>
+</ul>
+
+</body>
+</html>
