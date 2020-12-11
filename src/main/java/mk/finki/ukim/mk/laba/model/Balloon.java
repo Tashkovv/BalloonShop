@@ -34,7 +34,6 @@ public class Balloon implements Comparable<Balloon> {
         this.name = name;
         this.description = description;
         this.manufacturer = manufacturer;
-        this.balloonType = TYPE.OVAL;
     }
 
     public Balloon(String name, String description, Manufacturer manufacturer, TYPE balloonType) {
@@ -42,7 +41,6 @@ public class Balloon implements Comparable<Balloon> {
         this.description = description;
         this.manufacturer = manufacturer;
         this.balloonType = balloonType;
-        this.balloonType = TYPE.OVAL;
     }
 
 

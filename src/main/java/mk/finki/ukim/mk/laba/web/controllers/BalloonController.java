@@ -38,6 +38,9 @@ public class BalloonController {
     public String getAddBalloonPage(Model model) {
         List<Manufacturer> manufacturers = this.manufacturerService.findAll();
         model.addAttribute("manufacturers", manufacturers);
+
+        model.addAttribute("edit", false);
+
         model.addAttribute("type1", TYPE.HEART);
         model.addAttribute("type2", TYPE.OVAL);
         model.addAttribute("type3", TYPE.SQUARE);
@@ -52,6 +55,10 @@ public class BalloonController {
             List<Manufacturer> manufacturers = this.manufacturerService.findAll();
             model.addAttribute("manufacturers", manufacturers);
             model.addAttribute("balloon", balloon);
+
+            model.addAttribute("edit", true);
+            model.addAttribute("oldName", balloon.getName());
+
             model.addAttribute("type1", TYPE.HEART);
             model.addAttribute("type2", TYPE.OVAL);
             model.addAttribute("type3", TYPE.SQUARE);
@@ -62,11 +69,12 @@ public class BalloonController {
     }
 
     @PostMapping("/add")
-    public String saveBalloon(@RequestParam("name") String name,
+    public String saveBalloon(@RequestParam(name = "oldName", required = false) String oldName,
+                              @RequestParam("name") String name,
                               @RequestParam("description") String description,
                               @RequestParam("manufacturer") Long manufacturer,
-                              @RequestParam TYPE type) {
-        this.balloonService.SaveOrUpdate(name, description, manufacturer, type);
+                              @RequestParam("type") TYPE type) {
+        this.balloonService.SaveOrUpdate(name, description, manufacturer, type, oldName);
         return "redirect:/balloons";
     }
 

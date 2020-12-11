@@ -25,6 +25,23 @@
 <body>
 
 <form th:action="@{/search}" th:method="POST">
+    <div class="form-group">
+        <label>Search by:</label>
+        <select name="searchBy" class="form-control">
+            <option th:value="name"
+                    th:text="name">
+            </option>
+            <option th:value="description"
+                    th:text="description">
+            </option>
+            <option th:value="type"
+                    th:text="type">
+            </option>
+            <option th:value="manufacturer"
+                    th:text="manufacturer">
+            </option>
+        </select>
+    </div>
     <input type="text" name="searchValue">
     <input type="submit" class="btn btn-info" value="Submit">
 </form>

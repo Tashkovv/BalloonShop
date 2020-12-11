@@ -61,6 +61,12 @@
     <div class="row">
         <div class="col-md-5">
             <form action="/balloons/add" method="POST">
+                <th:block th:if="${edit}">
+                    <input type="hidden"
+                           id="oldName"
+                           name="oldName"
+                           th:value="${oldName}">
+                </th:block>
                 <div class="form-group">
                     <label for="name">Balloon name</label>
                     <input type="text"

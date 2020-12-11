@@ -11,11 +11,15 @@ public interface BalloonService {
 
     Optional<Balloon> findById(Long id);
 
-    List<Balloon> searchByNameOrDescription(String text);
+    List<Balloon> searchByNameOrDescriptionLike(String text,String by);
 
-    Optional<Balloon> SaveOrUpdate(String name, String description, Long manufacturerId, TYPE balloonType);
+    Optional<Balloon> SaveOrUpdate(String name, String description, Long manufacturerId, TYPE balloonType, String oldName);
 
     void deleteById(Long id);
 
-    List<Balloon> searchByType(String type);
+    List<Balloon> searchByTypeLike(String type);
+
+    List<Balloon> searchByManufacturerLike(String text);
+
+    List<Balloon> search(String text, String by);
 }
