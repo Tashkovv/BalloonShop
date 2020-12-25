@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "SearchBalloonServlet", urlPatterns = "/search")
 public class SearchBalloonServlet extends HttpServlet {
@@ -26,19 +25,14 @@ public class SearchBalloonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setAttribute("searchText", req.getParameter("searchValue"));
-        req.getSession().setAttribute("searchBy", req.getParameter("searchBy"));
         resp.sendRedirect("/search");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        String text = (String) req.getSession().getAttribute("searchText");
-        String searchBy = (String) req.getSession().getAttribute("searchBy");
-
-        context.setVariable("result", balloonService.search(text, searchBy));
-        context.setVariable("by", searchBy);
-
+        context.setVariable("result", balloonService.searchByType((String) req.getSession().getAttribute("searchText")));
+        resp.setContentType("application/xhtml+xml");
         springTemplateEngine.process("search.html", context, resp.getWriter());
     }
 }

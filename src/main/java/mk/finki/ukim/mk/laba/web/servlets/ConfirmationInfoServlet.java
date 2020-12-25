@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="ConfirmationInfoServlet", urlPatterns = "/ConfirmationInfo")
+@WebServlet(name="ConfirmationInfoServlet", urlPatterns = "/servlet/ConfirmationInfo")
 public class ConfirmationInfoServlet extends HttpServlet {
     private final SpringTemplateEngine springTemplateEngine;
     private final OrderService orderService;

@@ -1,34 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-    <meta charset="utf-8">
-    <title>WP lab - Confirmation Info</title>
-    <style type="text/css">
-        body {
-            width: 800px;
-            margin: auto;
-        }
-        table {
-            width:100%;
-        }
-        table, td, th {
-            border: 1px solid black;
-            padding: 3px 2px;
-        }
-    </style>
-</head>
-<body>
+<th:block xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <section>
     <header>
         <h1>Balloon Order page - Order confirmation </h1>
@@ -41,27 +11,27 @@
         </tr>
         <tr>
             <td><b>Client Name </b></td>
-            <td><th:block th:text="${clientName}"></th:block></td>
+            <td><th:block th:text="${clientName}"/></td>
         </tr>
         <tr>
             <td><b>Client Address </b></td>
-            <td><th:block th:text="${clientAddress}"></th:block></td>
+            <td><th:block th:text="${clientAddress}"/></td>
         </tr>
         <tr>
             <td><b>Client IP Address</b></td>
-            <td><th:block th:text="${clientsIpAddress}"></th:block></td>
+            <td><th:block th:text="${clientsIpAddress}"/></td>
         </tr>
         <tr>
             <td><b>Client Browser</b></td>
-            <td><th:block th:text="${clientsBrowser}"></th:block></td>
+            <td><th:block th:text="${clientsBrowser}"/></td>
         </tr>
         <tr>
             <td><b>Balloon Color </b></td>
-            <td><th:block th:text="${clientsColor}"></th:block></td>
+            <td><th:block th:text="${clientsColor}"/></td>
         </tr>
         <tr>
             <td><b>Balloon Size </b></td>
-            <td><th:block th:text="${clientsSize}"></th:block></td>
+            <td><th:block th:text="${clientsSize}"/></td>
         </tr>
     </table>
     <div>
@@ -78,5 +48,4 @@
 
 
 </section>
-</body>
-</html>
+</th:block>

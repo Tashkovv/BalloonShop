@@ -20,8 +20,9 @@ public class OrdersController {
 
     @GetMapping("/orders")
     public String getOrdersPage(HttpServletRequest req, Model model) {
-        User user = (User) req.getSession().getAttribute("user");
-        model.addAttribute("orders", orderService.getAllOrdersByUsername(user.getUsername()));
-        return "userOrders";
+        String user = req.getRemoteUser();
+        model.addAttribute("orders", orderService.getAllOrdersByUsername(user));
+        model.addAttribute("bodyContent", "userOrders");
+        return "master-template";
     }
 }

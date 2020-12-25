@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "SelectBalloon", urlPatterns = "/selectBalloonSize")
+@WebServlet(name = "SelectBalloon", urlPatterns = "/servlet/selectBalloonSize")
 public class SelectBalloonServlet extends HttpServlet {
     private final BalloonService balloonService;
     private final SpringTemplateEngine springTemplateEngine;

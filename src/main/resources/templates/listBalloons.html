@@ -1,116 +1,85 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
+<th:block xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <header>
+        <h1>Welcome to our Balloon Shop App</h1>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-
-    <meta charset="utf-8">
-    <title>Balloon Order page - Welcome and choose a Balloon</title>
-    <style type="text/css">
-        body {
-            width: 800px;
-            margin: auto;
-        }
-    </style>
-</head>
-<body>
-
-<form th:action="@{/search}" th:method="POST">
-    <div class="form-group">
-        <label>Search by:</label>
-        <select name="searchBy" class="form-control">
-            <option th:value="name"
-                    th:text="name">
-            </option>
-            <option th:value="description"
-                    th:text="description">
-            </option>
-            <option th:value="type"
-                    th:text="type">
-            </option>
-            <option th:value="manufacturer"
-                    th:text="manufacturer">
-            </option>
-        </select>
-    </div>
-    <input type="text" name="searchValue">
-    <input type="submit" class="btn btn-info" value="Submit">
-</form>
-
-<header>
-    <h1>Welcome to our Balloon Shop App</h1>
-
-    <div th:if="${hasError}">
-        <div th:text="${error}" class="text-danger"></div>
-    </div>
+        <div th:if="${hasError}">
+            <div th:text="${error}" class="text-danger"></div>
+        </div>
 
 
-</header>
+    </header>
 
-<main>
-    <h2>Choose balloon color:</h2>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-1">
-                <form th:action="@{/selectBalloonSize}" th:method="POST">
+    <main>
+        <h2>Choose balloon color:</h2>
+        <div class="container">
+            <div class="row">
+                <!--<div class="col-md-1">
+                    <form th:action="@{/selectBalloonSize}" th:method="POST">
+                        <table>
+                            <thead>
+                            <th>Check one!</th>
+                            </thead>
+                            <tbody>
+                            <tr th:each="balloon : ${balloons}">
+                                <td style="padding-bottom: 64px;">
+                                    <input type="radio" name="color" th:value="${balloon.getName()}"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <input type="submit" class="btn btn-success" value="Submit"/>
+                    </form>
+                </div>-->
+                <div class="col-md-2">
                     <table>
                         <thead>
-                        <th>Check one!</th>
+                        <th>Name</th>
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                            <th>Delete</th>
+                        </th:block>
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                            <th>Edit</th>
+                        </th:block>
+                        <th>Order</th>
                         </thead>
                         <tbody>
-                        <tr th:each="balloon : ${balloons}">
-                            <td style="padding-bottom: 42px;">
-                                <input type="radio" name="color" th:value="${balloon.getName()}"/>
+                        <tr th:each="balloon: ${balloons}">
+                            <td th:text="${balloon.getName()}">
+                            </td>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <td>
+                                    <form th:method="DELETE"
+                                          th:action="@{'/balloons/delete/{id}'(id = ${balloon.getId()})} ">
+                                        <button type="submit" class="btn btn-primary btn-danger delete-button">Delete</button>
+                                    </form>
+                                </td>
+                            </th:block>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <td>
+                                    <a th:href="@{'/balloons/edit-form/{id}' (id = ${balloon.getId()})}"
+                                       class="btn btn-info edit-button">Edit</a>
+                                </td>
+                            </th:block>
+                            <td sec:authorize="isAuthenticated()">
+                                <form th:action="@{/selectBalloonSize}" th:method="POST">
+                                    <button type="submit"
+                                            name="color"
+                                            th:value="${balloon.getName()}"
+                                            class="btn btn-primary order-button">Order</button>
+                                </form>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-                    <input type="submit" class="btn btn-success" value="Submit"/>
-                </form>
-            </div>
-            <div class="col-md-2">
-                <table>
-                    <thead>
-                    <th>Name</th>
-                    <th>Delete</th>
-                    <th>Edit</th>
-                    </thead>
-                    <tbody>
-                    <tr th:each="balloon: ${balloons}">
-                        <td th:text="${balloon.getName()}">
-
-                        </td>
-                        <td>
-                            <form th:method="DELETE" th:action="@{'/balloons/delete/{id}'(id = ${balloon.getId()})} ">
-                                <button type="submit" class="btn btn-primary btn-danger">Delete</button>
-                            </form>
-                        </td>
-                        <td>
-                            <a th:href="@{'/balloons/edit-form/{id}' (id = ${balloon.getId()})}"
-                               class="btn btn-info">Edit</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5">
-                <a href="/balloons/add-form" class="btn btn-dark">Add new Balloon</a>
+        <div class="container">
+            <div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
+                <div class="col-md-5">
+                    <a href="/balloons/add-form" class="btn btn-dark add-button">Add new Balloon</a>
+                </div>
             </div>
         </div>
-    </div>
-</main>
-</body>
-</html>
+    </main>
+</th:block>

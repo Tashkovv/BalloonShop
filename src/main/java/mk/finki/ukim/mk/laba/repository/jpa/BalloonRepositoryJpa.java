@@ -16,7 +16,7 @@ public interface BalloonRepositoryJpa extends JpaRepository<Balloon, Long> {
 
     void deleteByName(String name);
 
-    List<Balloon> findAllByBalloonTypeLike(TYPE balloonType);
-
     List<Balloon> findAllByManufacturer(Manufacturer manufacturer);
+
+    List<Balloon> findAllByBalloonType(TYPE balloonType);
 }

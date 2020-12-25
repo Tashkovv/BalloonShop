@@ -3,10 +3,9 @@ package mk.finki.ukim.mk.laba.service.impl;
 import mk.finki.ukim.mk.laba.model.Balloon;
 import mk.finki.ukim.mk.laba.model.Manufacturer;
 import mk.finki.ukim.mk.laba.model.enums.TYPE;
+import mk.finki.ukim.mk.laba.model.exceptions.BalloonNotFoundException;
 import mk.finki.ukim.mk.laba.model.exceptions.ManufacturerIdNotFoundException;
 import mk.finki.ukim.mk.laba.model.exceptions.ManufacturerNotFoundException;
-import mk.finki.ukim.mk.laba.repository.impl.BalloonRepository;
-import mk.finki.ukim.mk.laba.repository.impl.ManufacturerRepository;
 import mk.finki.ukim.mk.laba.repository.jpa.BalloonRepositoryJpa;
 import mk.finki.ukim.mk.laba.repository.jpa.ManufacturerRepositoryJpa;
 import mk.finki.ukim.mk.laba.service.BalloonService;
@@ -45,11 +44,25 @@ public class BalloonServiceImpl implements BalloonService {
 
     @Override
     @Transactional
-    public Optional<Balloon> SaveOrUpdate(String name, String description, Long manufacturerId, TYPE balloonType, String oldName) {
-        Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId)
-                .orElseThrow(() -> new ManufacturerIdNotFoundException(manufacturerId));
-        balloonRepository.deleteByName(oldName);
+    public Optional<Balloon> SaveOrUpdate(String name, String description, Long manufacturerId, TYPE balloonType) {
+        Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId).orElseThrow(() -> new ManufacturerIdNotFoundException(manufacturerId));
+        balloonRepository.deleteByName(name);
         return Optional.of(balloonRepository.save(new Balloon(name, description, manufacturer, balloonType)));
+    }
+
+    @Override
+    @Transactional
+    public Optional<Balloon> edit(Long id, String name, String description, Long manufacturerId, TYPE balloonType) {
+        Balloon balloon = balloonRepository.findById(id).orElseThrow(() -> new BalloonNotFoundException(id));
+
+        Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId).orElseThrow(() -> new ManufacturerIdNotFoundException(manufacturerId));
+
+        balloon.setBalloonType(balloonType);
+        balloon.setDescription(description);
+        balloon.setManufacturer(manufacturer);
+        balloon.setName(name);
+
+        return Optional.of(balloonRepository.save(balloon));
     }
 
     @Override
@@ -58,23 +71,11 @@ public class BalloonServiceImpl implements BalloonService {
     }
 
     @Override
-    public List<Balloon> searchByTypeLike(String type) {
-        return balloonRepository.findAllByBalloonTypeLike(TYPE.valueOf(type));
+    public List<Balloon> searchByType(String type) {
+        return balloonRepository.findAllByBalloonType(TYPE.valueOf(type));
     }
-
     @Override
-    public List<Balloon> searchByManufacturerLike(String text) {
-        Manufacturer manufacturer = manufacturerRepository.findByNameLike(text)
-                .orElseThrow(() -> new ManufacturerNotFoundException(text));
-        return balloonRepository.findAllByManufacturer(manufacturer);
-    }
-
-    @Override
-    public List<Balloon> search(String text, String by) {
-        if (by.equals("name") || by.equals("description"))
-            return this.searchByNameOrDescriptionLike(text, by);
-        else if (by.equals("type"))
-            return this.searchByTypeLike(text);
-        else return this.searchByManufacturerLike(text);
+    public Optional<Balloon> save(String name, String description, Manufacturer manufacturer, TYPE balloonType) {
+        return Optional.of(balloonRepository.save(new Balloon(name, description, manufacturer, balloonType)));
     }
 }

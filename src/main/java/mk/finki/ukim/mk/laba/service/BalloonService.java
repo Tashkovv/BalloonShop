@@ -1,6 +1,7 @@
 package mk.finki.ukim.mk.laba.service;
 
 import mk.finki.ukim.mk.laba.model.Balloon;
+import mk.finki.ukim.mk.laba.model.Manufacturer;
 import mk.finki.ukim.mk.laba.model.enums.TYPE;
 
 import java.util.List;
@@ -13,13 +14,12 @@ public interface BalloonService {
 
     List<Balloon> searchByNameOrDescriptionLike(String text,String by);
 
-    Optional<Balloon> SaveOrUpdate(String name, String description, Long manufacturerId, TYPE balloonType, String oldName);
+    Optional<Balloon> SaveOrUpdate(String name, String description, Long manufacturerId, TYPE balloonType);
+
+    Optional<Balloon> edit(Long id, String name, String description, Long manufacturerId, TYPE balloonType);
 
     void deleteById(Long id);
 
-    List<Balloon> searchByTypeLike(String type);
-
-    List<Balloon> searchByManufacturerLike(String text);
-
-    List<Balloon> search(String text, String by);
+    List<Balloon> searchByType(String type);
+    Optional<Balloon> save(String name, String description, Manufacturer manufacturer, TYPE balloonType);
 }

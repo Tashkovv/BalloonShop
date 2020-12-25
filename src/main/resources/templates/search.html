@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Search Results</title>
 </head>
 <body>
 
-<th:block th:if="${result} != null">
-    <h3>Search results by <th:block th:text="${by}"/>: </h3>
-    <ul>
-        <li th:each="balloon : ${result}">Name:
-            <th:block th:text="${balloon.getName()}"/>
-            ,
-            description:
-            <th:block th:text="${balloon.getDescription()}"/>
-            ,
-            type:
-            <th:block th:text="${balloon.getBalloonType()}"/>
-        </li>
-    </ul>
-</th:block>
-<th:block th:if="${result} == null">
-    <h3>Nothing was found!</h3>
-</th:block>
+<h3>Search Results: </h3>
+
+<ul>
+    <li th:each="balloon : ${result}">Name:
+        <th:block th:text="${balloon.getName()}"/>
+        , description:
+        <th:block th:text="${balloon.getDescription()}"/>
+        , type:
+        <th:block th:text="${balloon.getBalloonType()}"/>
+    </li>
+</ul>
 
 </body>
 </html>
